@@ -1,33 +1,59 @@
-HELP.md
+# === Target & Build Directories ===
 target/
+build/
+bin/
+out/
 .mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
+# === Logs & Temporary Files ===
+*.log
+*.tmp
+*.bak
+*.swp
+*.zip
+*.tar.gz
+
+# === IDE & Editor Specific Files ===
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.idea_modules/
+
+# Eclipse
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
-.sts4-cache
+.sts4-cache/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+# Visual Studio Code
 .vscode/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+
+# === Environment & Local Configuration ===
+# Ignore local property overrides containing secrets or local DB configs
+application-local.properties
+application-local.yml
+application-dev.properties
+application-dev.yml
+local.properties
+
+# === OS Generated Files ===
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
