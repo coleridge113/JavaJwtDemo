@@ -1,7 +1,6 @@
 package com.luna.jwt_demo.entity;
 
 import org.hibernate.annotations.Audited.Table;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,3 +1,3 @@
 package com.luna.jwt_demo.repository;
 
-class UserInforRepository {}
+class UserInfoRepository {}
