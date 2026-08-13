@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.luna.jwt_demo.auth.model.dto.LoginRequest;
 import com.luna.jwt_demo.auth.model.dto.RegisterRequest;
 import com.luna.jwt_demo.auth.service.AuthService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -22,7 +23,7 @@ class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String,String>> authenticateUser(@RequestBody LoginRequest request) {
+    public ResponseEntity<Map<String,String>> authenticateUser(@Valid @RequestBody LoginRequest request) {
         String token = authService.authenticateUser(
             request.username(),
             request.password()
@@ -32,8 +33,11 @@ class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request) {
-        // authService.registerUser(request);
+    public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterRequest request) {
+        authService.registerUser(
+            request.username(),
+            request.password()
+        );
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Successfully added user");
     }
