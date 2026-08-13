@@ -1,21 +1,26 @@
 package com.luna.jwt_demo.auth.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.luna.jwt_demo.auth.model.dto.RegisterRequest;
+import com.luna.jwt_demo.auth.model.entity.UserInfo;
 import com.luna.jwt_demo.auth.repository.UserInfoRepository;
+import com.luna.jwt_demo.common.security.JwtService;
 
 @Service
 public class AuthService {
 
     private final JwtService jwtService;
     private final UserInfoRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     public AuthService(
         JwtService jwtService,
-        UserInfoRepository repository
+        UserInfoRepository repository,
+        PasswordEncoder passwordEncoder
     ) {
         this.jwtService = jwtService;
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String authenticateUser(String username, String password) {
@@ -23,7 +28,18 @@ public class AuthService {
         return token;
     }
 
-    // public boolean registerUser(RegisterRequest request) {
-    //
-    // }
+    public void registerUser(String username, String password) {
+        if (repository.existsByUsername(username)) {
+            throw new IllegalArgumentException("Username already exists!");
+        }
+
+        String encodedPassword = passwordEncoder.encode(password);
+        UserInfo user = new UserInfo(
+            username, 
+            encodedPassword, 
+            "USER"
+        );
+
+        repository.save(user);
+    }
 }
