@@ -25,11 +25,17 @@ public class UserInfo {
     private Long id;
 
     @Column(nullable = false, length = 50)
-    private String name;
-
-    @Column(nullable = false)
-    private String email;
+    private String username;
 
     @Column(nullable = false)
     private String passwordHash;
+
+    @Column(nullable = false)
+    private String role;
+
+    public UserInfo(String username, String passwordHash, String role) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.role = role;
+    }
 }
