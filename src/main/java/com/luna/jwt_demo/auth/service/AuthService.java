@@ -1,5 +1,6 @@
 package com.luna.jwt_demo.auth.service;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.luna.jwt_demo.auth.model.entity.UserInfo;
@@ -24,8 +25,15 @@ public class AuthService {
     }
 
     public String authenticateUser(String username, String password) {
-        String token = jwtService.generateToken(username, "user");
-        return token;
+        UserInfo user = repository.findByUsername(username)
+            .orElseThrow(() -> new BadCredentialsException("Invalid credentials!"));
+
+        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
+            throw new BadCredentialsException("Invalid credentials!");
+        }
+
+
+        return jwtService.generateToken(username, "user");
     }
 
     public void registerUser(String username, String password) {
