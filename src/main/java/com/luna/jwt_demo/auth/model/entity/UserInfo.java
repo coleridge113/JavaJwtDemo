@@ -33,8 +33,6 @@ public class UserInfo {
     @Column(nullable = false)
     private String role;
 
-    public UserInfo() {}
-
     public UserInfo(String username, String passwordHash, String role) {
         this.username = username;
         this.passwordHash = passwordHash;
