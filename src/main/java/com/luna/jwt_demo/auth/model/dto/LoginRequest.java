@@ -1,3 +1,3 @@
-package com.luna.jwt_demo.data.dto;
+package com.luna.jwt_demo.auth.model.dto;
 
 public record LoginRequest(String username, String password) {}

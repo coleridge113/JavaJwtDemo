@@ -1,4 +1,4 @@
-package com.luna.jwt_demo.service;
+package com.luna.jwt_demo.common.security;
 
 import java.util.Date;
 import javax.crypto.SecretKey;

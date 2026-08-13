@@ -1,4 +1,4 @@
-package com.luna.jwt_demo.entity;
+package com.luna.jwt_demo.auth.model.entity;
 
 import org.hibernate.annotations.Audited.Table;
 import jakarta.persistence.Column;
@@ -29,4 +29,7 @@ public class UserInfo {
 
     @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String passwordHash;
 }
