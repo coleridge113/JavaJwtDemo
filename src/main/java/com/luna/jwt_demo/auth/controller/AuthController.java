@@ -13,7 +13,7 @@ import com.luna.jwt_demo.auth.service.AuthService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth")
 class AuthController {
 
     private final AuthService authService;
