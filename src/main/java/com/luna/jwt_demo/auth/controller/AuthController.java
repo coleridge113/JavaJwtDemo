@@ -33,13 +33,14 @@ class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<Map<String, String>> registerUser(@Valid @RequestBody RegisterRequest request) {
         authService.registerUser(
             request.username(),
             request.password()
         );
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully added user");
+        Map<String, String> response = Map.of("message", "Successfully added user");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }

@@ -27,6 +27,7 @@ public class MessageController {
             payload
         );
 
-        return ResponseEntity.ok(Map.of("status", "Message queued successfully!"));
+        Map<String, String> response = Map.of("status", "Message queued successfully!");
+        return ResponseEntity.ok(response);
     }
 }
