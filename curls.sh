@@ -29,9 +29,9 @@ function api_signup() {
 }
 
 function send_message() {
-    local token="${1:-$AUTH_TOKEN}"
+    local text="${1:-Hello from RabbitMQ!}"
     local user="${2:-joseluna}"
-    local text="${3:-Hello from RabbitMQ!}"
+    local token="${3:-$AUTH_TOKEN}"
 
     if [ -z "$token" ]; then
         echo "Usage: send_msg <JWT_TOKEN> [user] [message]"
