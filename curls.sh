@@ -9,7 +9,7 @@ function api_login() {
     local username="$1"
     local password="$2"
 
-    curl -X POST http://localhost:8080/api/v1/login \
+    curl -X POST http://localhost:8080/api/v1/auth/login \
         -H 'Content-Type: application/json' \
         -d "{\"username\":\"${username}\", \"password\":\"${password}\"}"
 }
@@ -23,33 +23,23 @@ function api_signup() {
     local username="$1"
     local password="$2"
 
-    curl -X POST http://localhost:8080/api/v1/signup \
+    curl -X POST http://localhost:8080/api/v1/auth/signup \
         -H 'Content-Type: application/json' \
         -d "{\"username\":\"${username}\", \"password\":\"${password}\"}"
 }
 
 function send_message() {
-    if [ "$#" -lt 3 ]; then
-        echo "Usage: send_message <sender> <recipient> <body> [jwt_token] [time_sent]"
+    local token="${1:-$AUTH_TOKEN}"
+    local user="${2:-joseluna}"
+    local text="${3:-Hello from RabbitMQ!}"
+
+    if [ -z "$token" ]; then
+        echo "Usage: send_msg <JWT_TOKEN> [user] [message]"
         return 1
     fi
 
-    local sender="$1"
-    local recipient="$2"
-    local body="$3"
-
-    local default_token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE3ODYyNDc0NTEsImlhdCI6MTc4NjE2MTA1MSwiaXNzIjoiY3J1ZC1zYW5kYm94IiwibmFtZSI6Impvc2VsdW5hIiwicm9sZSI6InVzZXIifQ.1jJut80yBN11p3ucNc2Izw4dRlOEthMrCsGmb2TOXbM"
-    local jwt_token="${4:-$default_token}"
-
-    local time_sent="${5:-$(date -u +"%Y-%m-%dT%H:%M:%SZ")}"
-
-    curl -X POST http://localhost:18080/api/message \
-        -H 'Content-Type: application/json' \
-        -H "Authorization: Bearer ${jwt_token}" \
-        -d "{
-            \"sender\": \"${sender}\",
-            \"recipient\": \"${recipient}\",
-            \"body\": \"${body}\",
-            \"time_sent\": \"${time_sent}\"
-        }"
+    curl -i -X POST http://localhost:8080/api/v1/message \
+        -H "Authorization: Bearer $token" \
+        -H "Content-Type: application/json" \
+        -d "{\"user\": \"$user\", \"text\": \"$text\"}"
 }
