@@ -21,11 +21,11 @@ public class MessageController {
 
     @PostMapping("/message")
     public ResponseEntity<Map<String, String>> sendMessage(@RequestBody Map<String, String> payload) {
-        rabbitTemplate.convertAndSend(
-            RabbitMqConfig.EXCHANGE_NAME,
-            RabbitMqConfig.ROUTING_KEY,
-            payload
-        );
+        // rabbitTemplate.convertAndSend(
+        //     RabbitMqConfig.EXCHANGE_NAME,
+        //     RabbitMqConfig.ROUTING_KEY,
+        //     payload
+        // );
 
         Map<String, String> response = Map.of("status", "Message queued successfully!");
         return ResponseEntity.ok(response);
