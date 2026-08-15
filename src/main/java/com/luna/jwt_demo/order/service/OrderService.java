@@ -8,7 +8,7 @@ import com.luna.jwt_demo.order.repository.OrderRepository;
 @Service
 public class OrderService {
 
-    private OrderRepository repository;
+    private final OrderRepository repository;
 
     public OrderService(OrderRepository repository) {
         this.repository = repository;
@@ -21,7 +21,6 @@ public class OrderService {
 
     private OrderEntity mapDtoToEntity(OrderDto orderDto) {
         return new OrderEntity(
-            orderDto.id(),
             orderDto.customerName(),
             orderDto.items()
         );
