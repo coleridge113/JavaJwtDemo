@@ -23,6 +23,7 @@ public class RabbitMqConfig {
     public static final String ANALYTICS_QUEUE = "orders.analytics.queue";
 
     // Routing Patterns
+    public static final String ORDER_CREATED_PATTERN = "orders.created";
     public static final String ORDER_EVENTS_PATTERN = "orders.#";
     public static final String NOTIFICATION_PATTERN = "orders.*.notification"; 
 
@@ -56,7 +57,7 @@ public class RabbitMqConfig {
     // --- Bindings (Binding Multiple Queues to One Exchange) ---
     @Bean
     public Binding inventoryBinding(@Qualifier("inventoryQueue") Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("orders.created");
+        return BindingBuilder.bind(queue).to(exchange).with(ORDER_CREATED_PATTERN);
     }
 
     @Bean
