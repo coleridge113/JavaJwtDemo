@@ -25,4 +25,8 @@ public class OrderEntity {
     @Column(nullable = false, length = 50)
     private String items;
 
+    public OrderEntity(String customerName, String items) {
+        this.customerName = customerName;
+        this.items = items;
+    }
 }
