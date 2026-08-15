@@ -1,6 +1,7 @@
 package com.luna.jwt_demo.order.service;
 
 import org.springframework.stereotype.Service;
+import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
 import com.luna.jwt_demo.order.model.OrderDto;
 import com.luna.jwt_demo.order.model.OrderEntity;
 import com.luna.jwt_demo.order.repository.OrderRepository;
@@ -19,10 +20,25 @@ public class OrderService {
         repository.save(entity);
     }
 
-    private OrderEntity mapDtoToEntity(OrderDto orderDto) {
+    public OrderDto getOrderById(Long orderId) {
+        OrderEntity order = repository.findById(orderId)
+            .orElseThrow(() -> new ResourceNotFoundException("Order with ID " + orderId + " does not exist!"));
+
+        return mapEntityToDto(order);
+    }
+
+    private OrderEntity mapDtoToEntity(OrderDto dto) {
         return new OrderEntity(
-            orderDto.customerName(),
-            orderDto.items()
+            dto.customerName(),
+            dto.items()
+        );
+    }
+
+    private OrderDto mapEntityToDto(OrderEntity entity) {
+        return new OrderDto(
+            entity.getId(),
+            entity.getCustomerName(),
+            entity.getItems()
         );
     }
 }
