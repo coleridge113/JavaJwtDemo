@@ -1,6 +1,6 @@
 package com.luna.jwt_demo.order.model;
 
-import org.hibernate.annotations.Audited.Table;
+import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,10 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,9 +25,4 @@ public class OrderEntity {
     @Column(nullable = false, length = 50)
     private String items;
 
-    public OrderEntity(Long id, String customerName, String items) {
-        this.id = id;
-        this.customerName = customerName;
-        this.items = items;
-    }
 }
