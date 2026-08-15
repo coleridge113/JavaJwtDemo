@@ -12,8 +12,8 @@ public class MessageConsumerService {
 
     private final static Logger log = LoggerFactory.getLogger(MessageConsumerService.class);
 
-    @RabbitListener(queues = RabbitMqConfig.QUEUE_NAME)
-    public void receiveMessage(Map<String, String> message) {
-        log.info("Message: " + message.get("text"));
-    }
+    // @RabbitListener(queues = RabbitMqConfig.QUEUE_NAME)
+    // public void receiveMessage(Map<String, String> message) {
+    //     log.info("Message: " + message.get("text"));
+    // }
 }
