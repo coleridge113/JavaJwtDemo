@@ -9,9 +9,21 @@ function api_login() {
     local username="$1"
     local password="$2"
 
-    curl -X POST http://localhost:8080/api/v1/auth/login \
+    # Make the API request and capture the response
+    local response
+    response=$(curl -s -X POST http://localhost:8080/api/v1/auth/login \
         -H 'Content-Type: application/json' \
-        -d "{\"username\":\"${username}\", \"password\":\"${password}\"}"
+        -d "{\"username\":\"${username}\", \"password\":\"${password}\"}")
+
+    # Extract the token using grep/sed and assign it to AUTH_TOKEN
+    AUTH_TOKEN=$(echo "$response" | grep -o '"token":"[^"]*"' | cut -d'"' -f4)
+
+    if [ -z "$AUTH_TOKEN" ]; then
+        echo "Login failed: Could not retrieve token."
+        return 1
+    fi
+
+    echo "Successfully logged in. AUTH_TOKEN has been set."
 }
 
 function api_signup() {
