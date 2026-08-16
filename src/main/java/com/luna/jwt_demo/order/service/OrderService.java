@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import com.luna.jwt_demo.common.config.RabbitMqConfig;
 import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
+import com.luna.jwt_demo.order.mapper.OrderMapper;
 import com.luna.jwt_demo.order.model.OrderDto;
 import com.luna.jwt_demo.order.model.OrderEntity;
 import com.luna.jwt_demo.order.repository.OrderRepository;
@@ -13,16 +14,22 @@ public class OrderService {
 
     private final OrderRepository repository;
     private final RabbitTemplate rabbitTemplate;
+    private final OrderMapper orderMapper;
 
-    public OrderService(OrderRepository repository, RabbitTemplate rabbitTemplate) {
+    public OrderService(
+        OrderRepository repository, 
+        RabbitTemplate rabbitTemplate,
+        OrderMapper orderMapper
+    ) {
         this.repository = repository;
         this.rabbitTemplate = rabbitTemplate;
+        this.orderMapper = orderMapper;
     }
 
     public void createOrder(OrderDto orderDto) {
-        OrderEntity entity = mapDtoToEntity(orderDto);
+        OrderEntity entity = orderMapper.toEntity(orderDto);
         OrderEntity savedEntity = repository.save(entity);
-        OrderDto responseDto = mapEntityToDto(savedEntity);
+        OrderDto responseDto = orderMapper.toDto(savedEntity);
 
         rabbitTemplate.convertAndSend(
             RabbitMqConfig.ORDERS_EXCHANGE,
@@ -35,21 +42,6 @@ public class OrderService {
         OrderEntity order = repository.findById(orderId)
             .orElseThrow(() -> new ResourceNotFoundException("Order with ID " + orderId + " does not exist!"));
 
-        return mapEntityToDto(order);
-    }
-
-    private OrderEntity mapDtoToEntity(OrderDto dto) {
-        return new OrderEntity(
-            dto.customerName(),
-            dto.items()
-        );
-    }
-
-    private OrderDto mapEntityToDto(OrderEntity entity) {
-        return new OrderDto(
-            entity.getId(),
-            entity.getCustomerName(),
-            entity.getItems()
-        );
+        return orderMapper.toDto(order);
     }
 }
