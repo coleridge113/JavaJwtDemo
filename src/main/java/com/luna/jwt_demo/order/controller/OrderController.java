@@ -16,7 +16,7 @@ import com.luna.jwt_demo.order.service.OrderService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/orders")
 public class OrderController {
 
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
@@ -26,7 +26,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/orders")
+    @PostMapping
     public ResponseEntity<Map<String, String>> createOrder(@Valid @RequestBody OrderDto orderDto) {
         log.info("Received order: {}", orderDto);
         orderService.createOrder(orderDto);
@@ -35,7 +35,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/orders/{orderId}")
+    @GetMapping("/{orderId}")
     public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId) {
         OrderDto dto = orderService.getOrderById(orderId);
 
