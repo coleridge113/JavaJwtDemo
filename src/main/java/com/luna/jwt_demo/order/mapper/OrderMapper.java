@@ -7,11 +7,18 @@ import com.luna.jwt_demo.order.model.OrderDto;
 import com.luna.jwt_demo.order.model.OrderEntity;
 import com.luna.jwt_demo.order.model.OrderItemDto;
 import com.luna.jwt_demo.order.model.OrderItemEntity;
-import com.luna.jwt_demo.inventory.model.ProductDto;
-import com.luna.jwt_demo.inventory.model.ProductEntity;
+import com.luna.jwt_demo.product.mapper.ProductMapper;
+import com.luna.jwt_demo.product.model.ProductDto;
+import com.luna.jwt_demo.product.model.ProductEntity;
 
 @Component
 public class OrderMapper {
+
+    private final ProductMapper productMapper;
+
+    public OrderMapper(ProductMapper productMapper) {
+        this.productMapper = productMapper;
+    }
 
     public OrderEntity toEntity(OrderDto dto) {
         List<OrderItemEntity> orderItemEntities = dto.orderItems().stream()
@@ -36,34 +43,23 @@ public class OrderMapper {
         );
     }
 
-    public ProductDto toDto(ProductEntity entity) {
-        return new ProductDto(
-            entity.getId(), 
-            entity.getName(), 
-            entity.getQuantity()
-        );
-    }
-
-    public ProductEntity toEntity(ProductDto dto) {
-        return new ProductEntity(
-            dto.name(),
-            dto.quantity()
-        );
-    }
-
     public OrderItemDto toDto(OrderItemEntity entity) {
+        ProductDto productDto = productMapper.toDto(entity.getProductEntity());
+
         return new OrderItemDto(
             entity.getId(),
             this.toDto(entity.getOrderEntity()),
-            this.toDto(entity.getProductEntity()),
+            productDto,
             entity.getQuantity()
         );
     }
 
     public OrderItemEntity toEntity(OrderItemDto dto) {
+        ProductEntity productEntity = productMapper.toEntity(dto.product());
+
         return new OrderItemEntity(
             this.toEntity(dto.order()),
-            this.toEntity(dto.product()),
+            productEntity,
             dto.quantity()
         );
     }

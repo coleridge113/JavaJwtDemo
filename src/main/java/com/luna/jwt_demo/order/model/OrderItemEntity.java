@@ -1,6 +1,6 @@
 package com.luna.jwt_demo.order.model;
 
-import com.luna.jwt_demo.inventory.model.ProductEntity;
+import com.luna.jwt_demo.product.model.ProductEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

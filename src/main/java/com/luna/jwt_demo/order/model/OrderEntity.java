@@ -3,7 +3,7 @@ package com.luna.jwt_demo.order.model;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import com.luna.jwt_demo.inventory.model.ProductEntity;
+import com.luna.jwt_demo.product.model.ProductEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
