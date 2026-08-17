@@ -37,8 +37,11 @@ public class ProductService {
         }
     }
 
-    public boolean checkQuantity(String name) {
-        return false;
+    public Integer getProductStock(Long productId) {
+        ProductEntity product = repository.findById(productId)
+            .orElseThrow(() -> new ResourceNotFoundException("Product with ID {} does not exist!", productId));
+
+        return product.getStockQuantity();
     }
 
     public void addProduct(ProductDto dto) {
