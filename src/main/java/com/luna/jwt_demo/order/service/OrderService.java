@@ -40,7 +40,7 @@ public class OrderService {
 
     public OrderDto getOrderById(Long orderId) {
         OrderEntity order = repository.findById(orderId)
-            .orElseThrow(() -> new ResourceNotFoundException("Order with ID " + orderId + " does not exist!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Order with ID {} does not exist!", orderId));
 
         return orderMapper.toDto(order);
     }
