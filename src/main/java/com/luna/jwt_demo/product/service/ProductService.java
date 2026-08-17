@@ -25,7 +25,7 @@ public class ProductService {
     }
 
     @RabbitListener(queues = RabbitMqConfig.INVENTORY_QUEUE)
-    private void productQueueListener(OrderDto orderDto) {
+    public void productQueueListener(OrderDto orderDto) {
         try {
             Thread.sleep(3000);
             log.info("Product Service");
