@@ -5,6 +5,6 @@ import java.util.List;
 public record OrderDto(
     Long id,
     String customerName,
-    List<OrderItemDto> orderItems
+    List<Long> orderItemIdList
 ) {}
 

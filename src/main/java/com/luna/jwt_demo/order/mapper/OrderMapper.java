@@ -21,9 +21,15 @@ public class OrderMapper {
     }
 
     public OrderEntity toEntity(OrderDto dto) {
-        List<OrderItemEntity> orderItemEntities = dto.orderItems().stream()
-            .map(this::toEntity)
-            .collect(Collectors.toList());
+        if (dto == null) {
+            return null;
+        }
+
+        List<OrderItemEntity> orderItemEntities = (dto.orderItems() == null) 
+            ? List.of() 
+            : dto.orderItems().stream()
+                .map(this::toEntity)
+                .toList();
 
         return new OrderEntity(
             dto.customerName(),
@@ -32,14 +38,14 @@ public class OrderMapper {
     }
 
     public OrderDto toDto(OrderEntity orderEntity) {
-        List<OrderItemDto> orderItems = orderEntity.getOrderItems().stream()
-            .map(this::toDto)
+        List<Long> orderIdList = orderEntity.getOrderItems().stream()
+            .map(order -> order.getId())
             .collect(Collectors.toList());
 
         return new OrderDto(
             orderEntity.getId(),
             orderEntity.getCustomerName(),
-            orderItems
+            orderIdList
         );
     }
 
