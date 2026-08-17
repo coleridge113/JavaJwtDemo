@@ -9,7 +9,6 @@ import com.luna.jwt_demo.order.model.OrderItemDto;
 import com.luna.jwt_demo.order.model.OrderItemEntity;
 import com.luna.jwt_demo.product.mapper.ProductMapper;
 import com.luna.jwt_demo.product.model.ProductDto;
-import com.luna.jwt_demo.product.model.ProductEntity;
 
 @Component
 public class OrderMapper {
@@ -18,23 +17,6 @@ public class OrderMapper {
 
     public OrderMapper(ProductMapper productMapper) {
         this.productMapper = productMapper;
-    }
-
-    public OrderEntity toEntity(OrderDto dto) {
-        if (dto == null) {
-            return null;
-        }
-
-        List<OrderItemEntity> orderItemEntities = (dto.orderItems() == null) 
-            ? List.of() 
-            : dto.orderItems().stream()
-                .map(this::toEntity)
-                .toList();
-
-        return new OrderEntity(
-            dto.customerName(),
-            orderItemEntities
-        );
     }
 
     public OrderDto toDto(OrderEntity orderEntity) {
@@ -57,16 +39,6 @@ public class OrderMapper {
             this.toDto(entity.getOrderEntity()),
             productDto,
             entity.getQuantity()
-        );
-    }
-
-    public OrderItemEntity toEntity(OrderItemDto dto) {
-        ProductEntity productEntity = productMapper.toEntity(dto.product());
-
-        return new OrderItemEntity(
-            this.toEntity(dto.order()),
-            productEntity,
-            dto.quantity()
         );
     }
 }

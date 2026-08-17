@@ -27,14 +27,14 @@ public class ProductEntity {
     @Min(value = 0, message = "Quantity can't be negative")
     @NotNull
     @Column(nullable = false)
-    private Long quantity;
+    private Integer stockQuantity;
 
-    public ProductEntity(String name, Long quantity) {
+    public ProductEntity(String name, Integer stockQuantity) {
         this.name = name;
-        this.quantity = quantity;
+        this.stockQuantity = stockQuantity;
     }
 
     public Long getId() { return this.id; }
     public String getName() { return this.name; }
-    public Long getQuantity() { return this.quantity; }
+    public Integer getStockQuantity() { return this.stockQuantity; }
 }

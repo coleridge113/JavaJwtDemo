@@ -11,14 +11,14 @@ public class ProductMapper {
         return new ProductDto(
             entity.getId(), 
             entity.getName(), 
-            entity.getQuantity()
+            entity.getStockQuantity()
         );
     }
 
     public ProductEntity toEntity(ProductDto dto) {
         return new ProductEntity(
             dto.name(),
-            dto.quantity()
+            dto.stockQuantity()
         );
     }
 }

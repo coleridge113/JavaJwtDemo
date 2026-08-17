@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class OrderEntity {
 
     @Id
@@ -33,14 +35,27 @@ public class OrderEntity {
     private List<OrderItemEntity> orderItems = new ArrayList<>();
 
 
-    public OrderEntity(String customerName, List<OrderItemEntity> orderItems) {
+    public OrderEntity(String customerName) {
         this.customerName = customerName;
-        this.orderItems = orderItems;
     }
 
-    public void addOrderItems(ProductEntity product, Integer quantity) {
-        OrderItemEntity item = new OrderItemEntity(this, product, quantity);
-        this.orderItems.add(item);
+    public OrderEntity(String customerName, List<OrderItemEntity> orderItems) {
+        this.customerName = customerName;
+        if (orderItems != null) {
+            orderItems.forEach(this::addOrderItem);
+        }
+    }
+
+    public void addOrderItem(OrderItemEntity orderItem) {
+        if (orderItem != null) {
+            orderItems.add(orderItem);
+            orderItem.setOrder(this);
+        }
+    }
+
+    public void addOrderItem(ProductEntity product, Integer quantity) {
+        OrderItemEntity orderItem = new OrderItemEntity(this, product, quantity);
+        this.orderItems.add(orderItem);
     }
 
     public Long getId() { return this.id; }

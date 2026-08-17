@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.luna.jwt_demo.order.model.CreateOrderRequest;
 import com.luna.jwt_demo.order.model.OrderDto;
 import com.luna.jwt_demo.order.service.OrderService;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -27,9 +27,9 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> createOrder(@Valid @RequestBody OrderDto orderDto) {
-        log.info("Received order: {}", orderDto);
-        orderService.createOrder(orderDto);
+    public ResponseEntity<Map<String, String>> createOrder(@RequestBody CreateOrderRequest request) {
+        log.info("Received order: {}", request);
+        orderService.createOrder(request);
 
         Map<String, String> response = Map.of("message", "Successfully created order!");
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

@@ -46,4 +46,5 @@ public class OrderItemEntity {
     public Integer getQuantity() { return this.quantity; }
     public OrderEntity getOrderEntity() { return this.order; }
     public ProductEntity getProductEntity() { return this.product; }
+    public void setOrder(OrderEntity order) { this.order = order; }
 }
