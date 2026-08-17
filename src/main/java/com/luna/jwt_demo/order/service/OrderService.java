@@ -1,9 +1,5 @@
 package com.luna.jwt_demo.order.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import com.luna.jwt_demo.common.config.RabbitMqConfig;
@@ -12,7 +8,6 @@ import com.luna.jwt_demo.order.mapper.OrderMapper;
 import com.luna.jwt_demo.order.model.CreateOrderRequest;
 import com.luna.jwt_demo.order.model.OrderDto;
 import com.luna.jwt_demo.order.model.OrderEntity;
-import com.luna.jwt_demo.order.model.OrderItemRequest;
 import com.luna.jwt_demo.order.repository.OrderRepository;
 import com.luna.jwt_demo.product.mapper.ProductMapper;
 import com.luna.jwt_demo.product.model.ProductEntity;
