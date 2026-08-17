@@ -45,11 +45,13 @@ public class OrderService {
             order.addOrderItem(product, item.quantity());
         });
 
-        rabbitTemplate.convertAndSend(
-            RabbitMqConfig.ORDERS_EXCHANGE,
-            RabbitMqConfig.ORDER_CREATED_PATTERN,
-            order
-        );
+        repository.save(order);
+
+        // rabbitTemplate.convertAndSend(
+        //     RabbitMqConfig.ORDERS_EXCHANGE,
+        //     RabbitMqConfig.ORDER_CREATED_PATTERN,
+        //     order
+        // );
     }
 
     public OrderDto getOrderById(Long orderId) {
