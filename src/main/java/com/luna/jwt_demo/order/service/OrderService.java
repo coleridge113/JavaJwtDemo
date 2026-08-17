@@ -40,18 +40,17 @@ public class OrderService {
     public void createOrder(CreateOrderRequest request) {
         OrderEntity order = new OrderEntity(request.customerName());
         request.items().forEach(item -> {
-            ProductDto productDto = productService.findProductById(item.productId());
-            ProductEntity product = productMapper.toEntity(productDto);
+            ProductEntity product = productService.findProductEntityById(item.productId());
             order.addOrderItem(product, item.quantity());
         });
 
         repository.save(order);
 
-        // rabbitTemplate.convertAndSend(
-        //     RabbitMqConfig.ORDERS_EXCHANGE,
-        //     RabbitMqConfig.ORDER_CREATED_PATTERN,
-        //     order
-        // );
+        rabbitTemplate.convertAndSend(
+            RabbitMqConfig.ORDERS_EXCHANGE,
+            RabbitMqConfig.ORDER_CREATED_PATTERN,
+            order
+        );
     }
 
     public OrderDto getOrderById(Long orderId) {

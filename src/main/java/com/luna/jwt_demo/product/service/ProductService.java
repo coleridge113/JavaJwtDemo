@@ -47,7 +47,14 @@ public class ProductService {
     public ProductDto findProductById(Long productId) {
         ProductEntity entity = repository.findById(productId)
             .orElseThrow(() -> new ResourceNotFoundException("Product with ID {} does not exist!", productId));
-
+    
         return productMapper.toDto(entity);
+    }
+
+    public ProductEntity findProductEntityById(Long productId) {
+        ProductEntity entity = repository.findById(productId)
+            .orElseThrow(() -> new ResourceNotFoundException("Product with ID {} does not exist!", productId));
+
+        return entity;
     }
 }
