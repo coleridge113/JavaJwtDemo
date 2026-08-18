@@ -8,7 +8,7 @@ curl -i -X POST http://localhost:8080/api/v1/products \
 curl -i -X POST http://localhost:8080/api/v1/orders \
   -H "Authorization: Bearer $AUTH_TOKEN" \
   -H "Content-Type: application/json" \
-  -d "{\"customerName\": \"joseluna\", \"items\": [{\"productId\": 1, \"quantity\": 2}]}"
+  -d "{\"customerName\": \"joseluna\", \"items\": [{\"productId\": 1, \"quantity\": 10}]}"
 
 // Create order w/ multiple products
 curl -i -X POST http://localhost:8080/api/v1/orders \

@@ -37,4 +37,5 @@ public class ProductEntity {
     public Long getId() { return this.id; }
     public String getName() { return this.name; }
     public Integer getStockQuantity() { return this.stockQuantity; }
+    public void setStockQuantity(Integer stockQuantity) { this.stockQuantity = stockQuantity; }
 }

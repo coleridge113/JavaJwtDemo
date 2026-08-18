@@ -10,6 +10,7 @@ import com.luna.jwt_demo.common.config.RabbitMqConfig;
 import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
 import com.luna.jwt_demo.order.model.OrderItemRequest;
 import com.luna.jwt_demo.product.mapper.ProductMapper;
+import com.luna.jwt_demo.product.model.InventoryResult;
 import com.luna.jwt_demo.product.model.ProductDto;
 import com.luna.jwt_demo.product.model.ProductEntity;
 import com.luna.jwt_demo.product.repository.ProductRepository;
@@ -29,12 +30,36 @@ public class ProductService {
     @RabbitListener(queues = RabbitMqConfig.INVENTORY_QUEUE)
     public void productQueueListener(List<OrderItemRequest> items) {
         try {
-            Thread.sleep(3000);
-            log.info("Product Service");
-            log.info("{}", items);
+            for (OrderItemRequest item : items) {
+                InventoryResult result = updateProductStock(
+                    item.productId(),
+                    item.quantity(),
+                    true
+                );
+
+                if (!result.success()) {
+                    log.error("Failed to update: {}", item.productId());
+                }
+            }
         } catch (Exception ex) {
             log.error("Error: {}", ex.getMessage());
         }
+    }
+
+    public InventoryResult updateProductStock(Long productId, Integer quantity, boolean isAdd) {
+        ProductEntity product = repository.findById(productId)
+            .orElseThrow(() -> new ResourceNotFoundException("Product with ID {} does not exist!", productId));
+
+        if (product.getStockQuantity() < quantity) {
+            return new InventoryResult(false, "Not enough stock!");
+        }
+
+        Integer newStockQuantity = product.getStockQuantity() - quantity;
+
+        product.setStockQuantity(newStockQuantity);
+
+        repository.save(product);
+        return new InventoryResult(true, "Successfully update stock!");
     }
 
     public Integer getProductStock(Long productId) {
