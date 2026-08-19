@@ -63,3 +63,11 @@ function get_order() {
     curl http://localhost:8080/api/v1/orders/$number \
         -H "Authorization: Bearer $AUTH_TOKEN"
 }
+
+function get_product() {
+    local id="$1"
+    local token="${2:-$AUTH_TOKEN}"
+
+    curl http://localhost:8080/api/v1/products/$id \
+        -H "Authorization: Bearer $AUTH_TOKEN"
+}
