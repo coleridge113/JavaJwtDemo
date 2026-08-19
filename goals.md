@@ -10,5 +10,6 @@
 - [x] Populating products table
 - [x] Creating an order
 - [x] Fetching an order
-- [ ] Updating products table with order
+- [x] Updating products table with order
+- [ ] Foo
 

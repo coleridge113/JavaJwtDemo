@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.luna.jwt_demo.common.config.RabbitMqConfig;
 import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
 import com.luna.jwt_demo.order.model.OrderItemRequest;
@@ -72,6 +73,14 @@ public class ProductService {
     public void addProduct(ProductDto dto) {
         ProductEntity entity = productMapper.toEntity(dto);
         repository.save(entity);
+    }
+
+    @Transactional
+    public void addProducts(List<ProductDto> dtos) {
+        List<ProductEntity> entities = dtos.stream()
+            .map(productMapper::toEntity)
+            .toList();
+        repository.saveAll(entities);
     }
 
     public ProductDto findProductById(Long productId) {

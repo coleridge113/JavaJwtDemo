@@ -33,12 +33,10 @@ public class ProductController {
 
     @PostMapping("/batch")
     public ResponseEntity<Map<String, String>> addProducts(@RequestBody List<ProductDto> products) {
-        products.forEach(product ->
-            productService.addProduct(product)
-        );
+        productService.addProducts(products);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(Map.of("messsage", "successfully created"));
+            .body(Map.of("messsage", "Successfully added batch products"));
     }
 
     @GetMapping("/{id}")
