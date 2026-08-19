@@ -47,6 +47,7 @@ public class ProductService {
         }
     }
 
+    @Transactional
     public InventoryResult updateProductStock(Long productId, Integer quantity, boolean isAdd) {
         ProductEntity product = repository.findById(productId)
             .orElseThrow(() -> new ResourceNotFoundException("Product with ID {} does not exist!", productId));
@@ -70,6 +71,7 @@ public class ProductService {
         return product.getStockQuantity();
     }
 
+    @Transactional
     public void addProduct(ProductDto dto) {
         ProductEntity entity = productMapper.toEntity(dto);
         repository.save(entity);

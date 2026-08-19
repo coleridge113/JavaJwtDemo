@@ -2,6 +2,7 @@ package com.luna.jwt_demo.order.service;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.luna.jwt_demo.common.config.RabbitMqConfig;
 import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
 import com.luna.jwt_demo.order.mapper.OrderMapper;
@@ -34,6 +35,7 @@ public class OrderService {
         this.orderMapper = orderMapper;
     }
 
+    @Transactional
     public void createOrder(CreateOrderRequest request) {
         OrderEntity order = new OrderEntity(request.customerName());
         request.items().forEach(item -> {
