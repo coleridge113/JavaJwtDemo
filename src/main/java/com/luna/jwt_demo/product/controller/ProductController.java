@@ -46,4 +46,12 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK)
             .body(product);
     }
+
+    @GetMapping
+    public ResponseEntity<List<ProductDto>> getProducts() {
+        List<ProductDto> products = productService.getProducts();
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(products);
+    }
 }

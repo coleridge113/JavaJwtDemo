@@ -4,6 +4,10 @@ curl -i -X POST http://localhost:8080/api/v1/products \
   -H "Content-Type: application/json" \
   -d "{\"name\": \"Laptop\", \"stockQuantity\": 10}"
 
+
+curl http://localhost:8080/api/v1/products \
+    -H "Authorization: Bearer $AUTH_TOKEN"
+
 // Create Order
 curl -i -X POST http://localhost:8080/api/v1/orders \
   -H "Authorization: Bearer $AUTH_TOKEN" \
@@ -24,3 +28,5 @@ curl -i -X POST http://localhost:8080/api/v1/orders \
       {"productId": 5, "quantity": 1}
     ]
   }'
+
+

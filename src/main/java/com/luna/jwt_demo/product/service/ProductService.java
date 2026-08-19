@@ -98,4 +98,12 @@ public class ProductService {
 
         return entity;
     }
+
+    public List<ProductDto> getProducts() {
+        List<ProductDto> products = repository.findAll().stream()
+            .map(productMapper::toDto)
+            .toList();
+
+        return products;
+    }
 }
