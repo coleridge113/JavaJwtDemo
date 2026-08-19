@@ -5,8 +5,9 @@ curl -i -X POST http://localhost:8080/api/v1/products \
   -d "{\"name\": \"Laptop\", \"stockQuantity\": 10}"
 
 
-curl http://localhost:8080/api/v1/products \
-    -H "Authorization: Bearer $AUTH_TOKEN"
+// Get paged products
+curl -i -X GET "http://localhost:8080/api/v1/products?page=1&size=15&sort=name,desc" \
+  -H "Authorization: Bearer $AUTH_TOKEN"
 
 // Create Order
 curl -i -X POST http://localhost:8080/api/v1/orders \
