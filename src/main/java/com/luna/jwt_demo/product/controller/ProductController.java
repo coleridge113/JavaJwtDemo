@@ -43,15 +43,13 @@ public class ProductController {
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long productId) {
         ProductDto product = productService.findProductById(productId);
 
-        return ResponseEntity.status(HttpStatus.OK)
-            .body(product);
+        return ResponseEntity.ok(product);
     }
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getProducts() {
         List<ProductDto> products = productService.getProducts();
 
-        return ResponseEntity.status(HttpStatus.OK)
-            .body(products);
+        return ResponseEntity.ok(products);
     }
 }
