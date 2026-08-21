@@ -11,7 +11,8 @@ public class ProductMapper {
         return new ProductDto(
             entity.getId(), 
             entity.getName(), 
-            entity.getStockQuantity()
+            entity.getStockQuantity(),
+            entity.getAmountInCents()
         );
     }
 

@@ -33,6 +33,6 @@ public class CartItemEntity {
     public void setCart(CartEntity cart) { this.cart = cart; }
     public CartEntity getCart() { return this.cart; }
 
-    public Long getAmountInCents() { return this.product.getAmount(); }
+    public Long getAmountInCents() { return this.product.getAmountInCents(); }
     public Integer getQuantity() { return this.getQuantity(); }
 }

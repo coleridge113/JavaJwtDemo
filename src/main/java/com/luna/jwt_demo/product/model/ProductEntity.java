@@ -30,8 +30,8 @@ public class ProductEntity {
     private Integer stockQuantity;
 
     @Min(value = 0, message = "Amount can't be negative")
-    @Column(nullable = false)
-    private Long amountInCents;
+    @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
+    private Long amountInCents = 0L;
 
     public ProductEntity(String name, Integer stockQuantity) {
         this.name = name;
@@ -42,5 +42,5 @@ public class ProductEntity {
     public String getName() { return this.name; }
     public Integer getStockQuantity() { return this.stockQuantity; }
     public void setStockQuantity(Integer stockQuantity) { this.stockQuantity = stockQuantity; }
-    public Long getAmount() { return this.amountInCents; }
+    public Long getAmountInCents() { return this.amountInCents; }
 }
