@@ -29,4 +29,10 @@ public class CartItemEntity {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    public void setCart(CartEntity cart) { this.cart = cart; }
+    public CartEntity getCart() { return this.cart; }
+
+    public Long getAmountInCents() { return this.product.getAmount(); }
+    public Integer getQuantity() { return this.getQuantity(); }
 }
