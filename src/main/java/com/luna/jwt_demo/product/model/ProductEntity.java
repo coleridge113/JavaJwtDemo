@@ -36,6 +36,7 @@ public class ProductEntity {
     public ProductEntity(String name, Integer stockQuantity) {
         this.name = name;
         this.stockQuantity = stockQuantity;
+        this.amountInCents = (amountInCents != null) ? amountInCents : 0L;
     }
 
     public Long getId() { return this.id; }
