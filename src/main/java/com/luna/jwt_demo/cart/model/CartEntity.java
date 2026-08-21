@@ -49,7 +49,10 @@ public class CartEntity {
         recalculateTotal();
     }
 
-    private void recalculateTotal() {
+    public void setUser(UserInfo user) { this.user = user; }
+    public List<CartItemEntity> getItems() { return this.items; }
+
+    public void recalculateTotal() {
         totalAmountInCents = items.stream()
             .mapToLong(item -> item.getAmountInCents() * item.getQuantity())
             .sum();
