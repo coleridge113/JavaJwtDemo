@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +28,10 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> createOrder(@RequestBody CreateOrderRequest request) {
-        log.info("Received order: {}", request);
-        orderService.createOrder(request);
+    public ResponseEntity<Map<String, String>> createOrder(Authentication authentication) {
+        Long userId = (Long) authentication.getPrincipal();
+
+        orderService.createOrder(userId);
 
         Map<String, String> response = Map.of("message", "Successfully created order!");
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

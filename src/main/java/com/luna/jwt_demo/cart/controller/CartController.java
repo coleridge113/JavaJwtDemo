@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.luna.jwt_demo.cart.model.CartItemRequest;
-import com.luna.jwt_demo.cart.model.CartItemResponse;
+import com.luna.jwt_demo.cart.model.CartItemDto;
 import com.luna.jwt_demo.cart.service.CartService;
 
 @RestController
@@ -22,10 +22,14 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    // @GetMapping
-    // public ResponseEntity<List<CartItemResponse>> getCartItems() {
-    //
-    // }
+    @GetMapping
+    public ResponseEntity<List<CartItemDto>> getCartItems(Authentication authentication) {
+        Long userId = (Long) authentication.getPrincipal();
+
+        List<CartItemDto> items = cartService.getCartItems(userId);
+
+        return ResponseEntity.ok(items);
+    }
 
     @PostMapping
     public ResponseEntity<String> addCartItem(

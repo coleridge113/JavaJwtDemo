@@ -49,8 +49,10 @@ public class CartEntity {
         recalculateTotal();
     }
 
+    public UserInfo getUser() { return this.user; }
     public void setUser(UserInfo user) { this.user = user; }
     public List<CartItemEntity> getItems() { return this.items; }
+    public void clearCart() { this.items = new ArrayList<>(); }
 
     public void recalculateTotal() {
         totalAmountInCents = items.stream()

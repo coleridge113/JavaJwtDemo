@@ -38,3 +38,12 @@ curl -i -X POST http://localhost:8080/api/v1/carts \
     "productId": 3,
     "quantity": 2
   }'
+
+
+// Get Product
+curl http://localhost:8080/api/v1/products/1 \
+     -H "Authorization: Bearer $AUTH_TOKEN"
+
+// Get Cart Items
+curl http://localhost:8080/api/v1/carts \
+     -H "Authorization: Bearer $AUTH_TOKEN"

@@ -32,19 +32,25 @@ public class OrderItemEntity {
     @Column(nullable = false)
     private Integer quantity;
 
+    @Column(nullable = false)
+    private Long amountInCents;
+
     public OrderItemEntity(
         OrderEntity order,
         ProductEntity product,
-        Integer quantity
+        Integer quantity,
+        Long amountInCents
     ) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
+        this.amountInCents = amountInCents;
     }
 
     public Long getId() { return this.id; }
     public Integer getQuantity() { return this.quantity; }
     public OrderEntity getOrderEntity() { return this.order; }
     public ProductEntity getProductEntity() { return this.product; }
+    public Long getAmountInCents() { return this.amountInCents; }
     public void setOrder(OrderEntity order) { this.order = order; }
 }

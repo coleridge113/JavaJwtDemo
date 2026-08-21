@@ -26,7 +26,7 @@ public class OrderMapper {
 
         return new OrderDto(
             orderEntity.getId(),
-            orderEntity.getCustomerName(),
+            orderEntity.getUserId(),
             orderIdList
         );
     }

@@ -1,6 +1,6 @@
 package com.luna.jwt_demo.cart.model;
 
-public record CartItemResponse(
+public record CartItemDto(
     Long productId,
     String name,
     Long amountInCents,

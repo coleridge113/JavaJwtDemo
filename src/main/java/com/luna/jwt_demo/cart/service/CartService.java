@@ -1,10 +1,12 @@
 package com.luna.jwt_demo.cart.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.luna.jwt_demo.cart.model.CartItemRequest;
 import com.luna.jwt_demo.cart.repository.CartRepository;
+import com.luna.jwt_demo.common.exception.custom.EmptyCartException;
 import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
 import com.luna.jwt_demo.product.model.ProductEntity;
 import com.luna.jwt_demo.product.repository.ProductRepository;
@@ -12,6 +14,7 @@ import com.luna.jwt_demo.auth.model.entity.UserInfo;
 import com.luna.jwt_demo.auth.repository.UserInfoRepository;
 import com.luna.jwt_demo.cart.model.CartEntity;
 import com.luna.jwt_demo.cart.model.CartItemEntity;
+import com.luna.jwt_demo.cart.model.CartItemDto;
 
 @Service
 public class CartService {
@@ -59,5 +62,29 @@ public class CartService {
             item.setQuantity(request.quantity());
             cart.addItem(item);
         }
+    }
+
+    public List<CartItemDto> getCartItems(Long userId) {
+        CartEntity cart = cartRepository.findByUserId(userId)
+            .orElseThrow(() -> new EmptyCartException("User has no items in their cart!"));
+
+        List<CartItemDto> items = cart.getItems().stream()
+            .map(item -> {
+                ProductEntity product = item.getProduct();
+                Long amountInCents = product.getAmountInCents();
+                Integer quantity = item.getQuantity();
+                Long subtotal = amountInCents * quantity;
+
+                return new CartItemDto(
+                    product.getId(),
+                    product.getName(),
+                    amountInCents,
+                    quantity,
+                    subtotal
+                );
+            })
+            .toList();
+
+        return items;
     }
 }
