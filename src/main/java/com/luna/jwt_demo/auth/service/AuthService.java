@@ -33,7 +33,7 @@ public class AuthService {
         }
 
 
-        return jwtService.generateToken(username, "user");
+        return jwtService.generateToken(user.getId(), username, "user");
     }
 
     public void registerUser(String username, String password) {

@@ -39,6 +39,7 @@ public class UserInfo {
         this.role = role;
     }
 
+    public Long getId() { return this.id; }
     public String getUsername() { return username; }
     public String getPasswordHash() { return passwordHash; }
     public String getRole() { return role; }
