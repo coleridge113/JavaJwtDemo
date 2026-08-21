@@ -17,6 +17,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final int AUTH_HEADER_LENGTH = 7;
+    private final String AUTHORIZATION = "Authorization";
+    private final String TOKEN_PREFIX = "Bearer ";
 
     public JwtAuthFilter(JwtService jwtService) {
         this.jwtService = jwtService;
@@ -28,9 +30,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         HttpServletResponse response,
         FilterChain filterChain
     ) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader(AUTHORIZATION);
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith(TOKEN_PREFIX)) {
             filterChain.doFilter(request, response);
             return;
         }
