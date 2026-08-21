@@ -30,4 +30,11 @@ curl -i -X POST http://localhost:8080/api/v1/orders \
     ]
   }'
 
-
+// Add cart item
+curl -i -X POST http://localhost:8080/api/v1/carts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $AUTH_TOKEN" \
+  -d '{
+    "productId": 3,
+    "quantity": 2
+  }'
