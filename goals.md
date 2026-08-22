@@ -11,5 +11,4 @@
 - [x] Creating an order
 - [x] Fetching an order
 - [x] Updating products table with order
-- [ ] Foo
 
