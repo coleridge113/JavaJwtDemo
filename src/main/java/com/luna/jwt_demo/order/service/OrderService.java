@@ -7,7 +7,6 @@ import com.luna.jwt_demo.common.config.RabbitMqConfig;
 import com.luna.jwt_demo.common.exception.custom.EmptyCartException;
 import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
 import com.luna.jwt_demo.order.mapper.OrderMapper;
-import com.luna.jwt_demo.order.model.CreateOrderRequest;
 import com.luna.jwt_demo.order.model.OrderDto;
 import com.luna.jwt_demo.order.model.OrderEntity;
 import com.luna.jwt_demo.order.model.OrderItemEntity;
@@ -21,21 +20,21 @@ import com.luna.jwt_demo.cart.repository.CartRepository;
 @Service
 public class OrderService {
 
-    private final OrderRepository repository;
+    private final OrderRepository orderRepository;
     private final ProductService productService;
     private final CartRepository cartRepository;
     private final RabbitTemplate rabbitTemplate;
     private final OrderMapper orderMapper;
 
     public OrderService(
-        OrderRepository repository, 
+        OrderRepository orderRepository, 
         ProductService productService,
         CartRepository cartRepository,
         RabbitTemplate rabbitTemplate,
         OrderMapper orderMapper,
         ProductMapper productMapper
     ) {
-        this.repository = repository;
+        this.orderRepository = orderRepository;
         this.productService = productService;
         this.rabbitTemplate = rabbitTemplate;
         this.orderMapper = orderMapper;
@@ -43,7 +42,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(Long userId) {
+    public Long createOrder(Long userId) {
         CartEntity cart = cartRepository.findByUserId(userId)
             .orElseThrow(() -> new EmptyCartException("You have no items in your cart!"));
 
@@ -55,21 +54,28 @@ public class OrderService {
         order.setUser(cart.getUser());
 
         cart.getItems().forEach(cartItem -> {
+            ProductEntity product = cartItem.getProduct();
+            Integer quantity = cartItem.getQuantity();
+
             OrderItemEntity orderItem = new OrderItemEntity(
                 order, 
-                cartItem.getProduct(), 
-                cartItem.getQuantity(), 
+                product,
+                quantity,
                 cartItem.getAmountInCents()
             );
 
+            productService.updateProductStock(product.getId(), quantity, false);
             order.addOrderItem(orderItem);
         });
 
         cart.clearCart();
+        OrderEntity savedOrder = orderRepository.save(order);
+
+        return savedOrder.getId();
     }
 
     public OrderDto getOrderById(Long orderId) {
-        OrderEntity order = repository.findById(orderId)
+        OrderEntity order = orderRepository.findById(orderId)
             .orElseThrow(() -> new ResourceNotFoundException("Order with ID {} does not exist!", orderId));
 
         return orderMapper.toDto(order);

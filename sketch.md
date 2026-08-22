@@ -12,8 +12,6 @@ curl -i -X GET "http://localhost:8080/api/v1/products?page=1&size=15&sort=name,d
 // Create Order
 curl -i -X POST http://localhost:8080/api/v1/orders \
   -H "Authorization: Bearer $AUTH_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{\"customerName\": \"joseluna\", \"items\": [{\"productId\": 1, \"quantity\": 10}]}"
 
 // Create order w/ multiple products
 curl -i -X POST http://localhost:8080/api/v1/orders \
@@ -35,7 +33,7 @@ curl -i -X POST http://localhost:8080/api/v1/carts \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $AUTH_TOKEN" \
   -d '{
-    "productId": 3,
+    "productId": 5,
     "quantity": 2
   }'
 
