@@ -48,6 +48,7 @@ public class CartService {
         ProductEntity product = productRepository.findById(request.productId())
             .orElseThrow(() -> new ResourceNotFoundException("Product with ID {} does not exist!", request.productId()));
 
+
         Optional<CartItemEntity> existingItem = cart.getItems().stream()
             .filter(item -> item.getProduct().getId().equals(request.productId()))
             .findFirst();

@@ -9,10 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.luna.jwt_demo.order.model.CreateOrderRequest;
 import com.luna.jwt_demo.order.model.OrderDto;
 import com.luna.jwt_demo.order.service.OrderService;
 
@@ -28,12 +26,16 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> createOrder(Authentication authentication) {
+    public ResponseEntity<Map<String, Object>> createOrder(Authentication authentication) {
         Long userId = (Long) authentication.getPrincipal();
 
-        orderService.createOrder(userId);
+        Long orderId = orderService.createOrder(userId);
 
-        Map<String, String> response = Map.of("message", "Successfully created order!");
+        Map<String, Object> response = Map.of(
+            "message", "Successfully created order!",
+            "orderId", orderId
+        );
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
