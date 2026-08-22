@@ -71,3 +71,17 @@ function get_product() {
     curl http://localhost:8080/api/v1/products/$id \
         -H "Authorization: Bearer $AUTH_TOKEN"
 }
+
+function add_cart_item() {
+    local id="$1"
+    local qty="$2"
+    local token="${3:-$AUTH_TOKEN}"
+
+    curl -i -X POST http://localhost:8080/api/v1/carts \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $AUTH_TOKEN" \
+        -d '{
+            "productId": '$id',
+            "quantity": '$qty'
+        }'
+}
