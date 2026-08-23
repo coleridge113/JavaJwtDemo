@@ -97,11 +97,25 @@ function add_cart_item() {
     local qty="$2"
     local token="${3:-$AUTH_TOKEN}"
 
-    curl -i -X POST http://localhost:8080/api/v1/carts \
+    curl -i -X PUT http://localhost:8080/api/v1/carts/items \
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer $AUTH_TOKEN" \
         -d '{
             "productId": '$id',
             "quantity": '$qty'
+        }'
+}
+
+function update_order_status() {
+    local id="$1"
+    local order_status="$2"
+    local token="${3:-$AUTH_TOKEN}"
+
+    curl -i -X PUT http://localhost:8080/api/v1/orders \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $AUTH_TOKEN" \
+        -d '{
+            "orderId": '$id',
+            "status": '\"$order_status\"'
         }'
 }

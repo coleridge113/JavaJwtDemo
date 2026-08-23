@@ -19,6 +19,7 @@ import com.luna.jwt_demo.product.model.ProductEntity;
 import com.luna.jwt_demo.product.service.ProductService;
 import com.luna.jwt_demo.cart.model.CartEntity;
 import com.luna.jwt_demo.cart.repository.CartRepository;
+import com.luna.jwt_demo.order.model.OrderUpdateRequest;
 
 @Service
 public class OrderService {
@@ -110,7 +111,16 @@ public class OrderService {
             order.getId(),
             order.getUserId(),
             orderItemIdList,
-            orderItems
+            orderItems,
+            order.getStatus()
         );
+    }
+
+    public OrderDto updateOrderStatus(OrderUpdateRequest request) {
+        OrderEntity order = orderRepository.findById(request.orderId())
+            .orElseThrow(() -> new ResourceNotFoundException("Order with ID {} does not exist!"));
+
+        order.setStatus(request.status());
+        return orderMapper.toDto(orderRepository.save(order));
     }
 }

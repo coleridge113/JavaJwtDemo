@@ -8,6 +8,7 @@ public record OrderDto(
     Long id,
     Long userId,
     List<Long> orderItemIdList,
-    List<OrderItemResponse> orderItems
+    List<OrderItemResponse> orderItems,
+    OrderStatus status
 ) {}
 

@@ -28,7 +28,8 @@ public class OrderMapper {
             orderEntity.getId(),
             orderEntity.getUserId(),
             orderIdList,
-            null
+            null,
+            orderEntity.getStatus()
         );
     }
 

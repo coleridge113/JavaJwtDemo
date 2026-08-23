@@ -6,7 +6,10 @@ import java.util.List;
 import com.luna.jwt_demo.auth.model.entity.UserInfo;
 import com.luna.jwt_demo.product.model.ProductEntity;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,6 +41,10 @@ public class OrderEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItemEntity> orderItems = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private OrderStatus status = OrderStatus.PREPARING;
+
     public void addOrderItem(OrderItemEntity orderItem) {
         if (orderItem != null) {
             orderItems.add(orderItem);
@@ -59,5 +66,7 @@ public class OrderEntity {
     public Long getUserId() { return this.user.getId(); }
     public void setUser(UserInfo user) { this.user = user; }
     public List<OrderItemEntity> getOrderItems() { return this.orderItems; }
+    public OrderStatus getStatus() { return this.status; }
+    public void setStatus(OrderStatus status) { this.status = status; }
 
 }
