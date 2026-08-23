@@ -27,7 +27,8 @@ public class OrderMapper {
         return new OrderDto(
             orderEntity.getId(),
             orderEntity.getUserId(),
-            orderIdList
+            orderIdList,
+            null
         );
     }
 

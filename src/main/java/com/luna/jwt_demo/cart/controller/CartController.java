@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,14 +45,14 @@ public class CartController {
         return ResponseEntity.ok(items);
     }
 
-    @PostMapping
-    public ResponseEntity<String> addCartItem(
+    @PutMapping("/items")
+    public ResponseEntity<String> upsertCartItem(
         Authentication authentication,
         @RequestBody CartItemRequest request
     ) {
         Long userId = (Long) authentication.getPrincipal();
 
-        cartService.addCartItem(userId, request);
+        cartService.upsertCartItem(userId, request);
         return ResponseEntity.ok("Successfully added item to cart!");
     }
 }

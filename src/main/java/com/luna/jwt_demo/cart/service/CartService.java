@@ -1,7 +1,6 @@
 package com.luna.jwt_demo.cart.service;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.luna.jwt_demo.cart.model.CartItemRequest;
@@ -34,7 +33,7 @@ public class CartService {
     }
 
     @Transactional
-    public void addCartItem(Long userId, CartItemRequest request) {
+    public void upsertCartItem(Long userId, CartItemRequest request) {
         CartEntity cart =  cartRepository.findByUserId(userId)
             .orElseGet(() -> {
                 UserInfo user = userRepository.findById(userId)
@@ -48,21 +47,19 @@ public class CartService {
         ProductEntity product = productRepository.findById(request.productId())
             .orElseThrow(() -> new ResourceNotFoundException("Product with ID {} does not exist!", request.productId()));
 
-
-        Optional<CartItemEntity> existingItem = cart.getItems().stream()
+        cart.getItems().stream()
             .filter(item -> item.getProduct().getId().equals(request.productId()))
-            .findFirst();
-
-        if (existingItem.isPresent()) {
-            CartItemEntity item = existingItem.get();
-            item.setQuantity(request.quantity());
-        } else {
-            CartItemEntity item = new CartItemEntity();
-            item.setProduct(product);
-            item.setCart(cart);
-            item.setQuantity(request.quantity());
-            cart.addItem(item);
-        }
+            .findFirst()
+            .ifPresentOrElse(
+                item -> item.setQuantity(request.quantity()), 
+                () -> {
+                    CartItemEntity item = new CartItemEntity();
+                    item.setProduct(product);
+                    item.setCart(cart);
+                    item.setQuantity(request.quantity());
+                    cart.addItem(item);
+                }
+            );
     }
 
     public List<CartItemDto> getCartItems(Long userId) {
