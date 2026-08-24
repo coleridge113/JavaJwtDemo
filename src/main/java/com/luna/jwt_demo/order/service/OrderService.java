@@ -116,8 +116,8 @@ public class OrderService {
         );
     }
 
-    public OrderDto updateOrderStatus(OrderUpdateRequest request) {
-        OrderEntity order = orderRepository.findById(request.orderId())
+    public OrderDto updateOrderStatus(Long orderId, OrderUpdateRequest request) {
+        OrderEntity order = orderRepository.findById(orderId)
             .orElseThrow(() -> new ResourceNotFoundException("Order with ID {} does not exist!"));
 
         order.setStatus(request.status());

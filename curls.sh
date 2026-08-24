@@ -111,11 +111,10 @@ function update_order_status() {
     local order_status="$2"
     local token="${3:-$AUTH_TOKEN}"
 
-    curl -i -X PUT http://localhost:8080/api/v1/orders \
+    curl -i -X PUT http://localhost:8080/api/v1/orders/$id/status \
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer $AUTH_TOKEN" \
         -d '{
-            "orderId": '$id',
             "status": '\"$order_status\"'
         }'
 }
