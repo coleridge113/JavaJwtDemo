@@ -65,8 +65,8 @@ public class RabbitMqConfig {
         return BindingBuilder.bind(queue).to(exchange).with(ORDER_EVENTS_PATTERN);
     }
 
-    @Bean
-    public Binding analyticsBinding(@Qualifier("analyticsQueue") Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ORDER_EVENTS_PATTERN);
-    }
+    // @Bean
+    // public Binding analyticsBinding(@Qualifier("analyticsQueue") Queue queue, TopicExchange exchange) {
+    //     return BindingBuilder.bind(queue).to(exchange).with(ORDER_EVENTS_PATTERN);
+    // }
 }
