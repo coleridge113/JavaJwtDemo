@@ -73,6 +73,7 @@ public class OrderService {
         });
 
         cart.clearCart();
+        cartRepository.delete(cart);
         OrderEntity savedOrder = orderRepository.save(order);
 
         return orderMapper.toDto(savedOrder);
