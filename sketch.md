@@ -10,8 +10,8 @@ curl -i -X GET "http://localhost:8080/api/v1/products?page=1&size=15&sort=name,d
   -H "Authorization: Bearer $AUTH_TOKEN"
 
 // Create Order
-curl -i -X POST http://localhost:8080/api/v1/orders \
-  -H "Authorization: Bearer $AUTH_TOKEN" \
+curl -i -X POST http://localhost:8080/api/v1/orders/test \
+  -H "Authorization: Bearer $AUTH_TOKEN" 
 
 // Create order w/ multiple products
 curl -i -X POST http://localhost:8080/api/v1/orders \

@@ -46,7 +46,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Long createOrder(Long userId) {
+    public OrderDto createOrder(Long userId) {
         CartEntity cart = cartRepository.findByUserId(userId)
             .orElseThrow(() -> new EmptyCartException("You have no items in your cart!"));
 
@@ -75,7 +75,7 @@ public class OrderService {
         cart.clearCart();
         OrderEntity savedOrder = orderRepository.save(order);
 
-        return savedOrder.getId();
+        return orderMapper.toDto(savedOrder);
     }
 
     public OrderDto getOrderById(Long orderId, List<String> includes) {
