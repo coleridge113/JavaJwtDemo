@@ -7,18 +7,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "user_info")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +28,8 @@ public class UserInfo {
 
     @Column(nullable = false)
     private String role;
+
+    protected UserInfo() {};
 
     public UserInfo(String username, String passwordHash, String role) {
         this.username = username;

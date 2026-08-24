@@ -9,11 +9,9 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "products")
-@NoArgsConstructor
 @AllArgsConstructor
 public class ProductEntity {
 
@@ -32,6 +30,8 @@ public class ProductEntity {
     @Min(value = 0, message = "Amount can't be negative")
     @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
     private Long amountInCents = 0L;
+
+    protected ProductEntity() {}
 
     public ProductEntity(String name, Integer stockQuantity) {
         this.name = name;
