@@ -1,8 +1,6 @@
 package com.luna.jwt_demo.order.controller;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -66,7 +64,7 @@ public class OrderController {
 
         rabbitTemplate.convertAndSend(
             RabbitMqConfig.ORDERS_EXCHANGE, 
-            RabbitMqConfig.NOTIFICATION_PATTERN, 
+            RabbitMqConfig.ORDER_CREATED_PATTERN, 
             order
         );
 
