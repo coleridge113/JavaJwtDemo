@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.luna.jwt_demo.common.config.RabbitMqConfig;
 import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
+import com.luna.jwt_demo.order.model.OrderDto;
 import com.luna.jwt_demo.order.model.OrderItemRequest;
 import com.luna.jwt_demo.product.mapper.ProductMapper;
 import com.luna.jwt_demo.product.model.InventoryResult;
@@ -31,22 +32,9 @@ public class ProductService {
     }
 
     @RabbitListener(queues = RabbitMqConfig.INVENTORY_QUEUE)
-    public void productQueueListener(List<OrderItemRequest> items) {
-        try {
-            for (OrderItemRequest item : items) {
-                InventoryResult result = updateProductStock(
-                    item.productId(),
-                    item.quantity(),
-                    true
-                );
-
-                if (!result.success()) {
-                    log.error("Failed to update: {}", item.productId());
-                }
-            }
-        } catch (Exception ex) {
-            log.error("Error: {}", ex.getMessage());
-        }
+    public void productQueueListener(OrderDto order) {
+        log.info("Inventory Queue");
+        log.info(order.toString());
     }
 
     @Transactional
