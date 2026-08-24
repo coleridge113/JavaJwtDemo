@@ -12,5 +12,19 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web UI
+    environment:
+      MP_MAX_MESSAGES: 500
+      MP_DATABASE: /data/mailpit.db
+    volumes:
+      - mailpit_data:/data
+
 volumes:
-  rabbitmq_data:   
+  rabbitmq_data:
+  mailpit_data:
