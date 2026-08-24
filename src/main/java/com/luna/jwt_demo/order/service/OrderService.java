@@ -1,11 +1,9 @@
 package com.luna.jwt_demo.order.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.luna.jwt_demo.common.config.RabbitMqConfig;
 import com.luna.jwt_demo.common.exception.custom.EmptyCartException;
 import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
 import com.luna.jwt_demo.order.mapper.OrderMapper;
@@ -27,20 +25,17 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final CartRepository cartRepository;
-    private final RabbitTemplate rabbitTemplate;
     private final OrderMapper orderMapper;
 
     public OrderService(
         OrderRepository orderRepository, 
         ProductService productService,
         CartRepository cartRepository,
-        RabbitTemplate rabbitTemplate,
         OrderMapper orderMapper,
         ProductMapper productMapper
     ) {
         this.orderRepository = orderRepository;
         this.productService = productService;
-        this.rabbitTemplate = rabbitTemplate;
         this.orderMapper = orderMapper;
         this.cartRepository = cartRepository;
     }
