@@ -66,7 +66,7 @@ public class OrderController {
 
         rabbitTemplate.convertAndSend(
             RabbitMqConfig.ORDERS_EXCHANGE, 
-            RabbitMqConfig.ORDER_CREATED_PATTERN, 
+            RabbitMqConfig.NOTIFICATION_PATTERN, 
             order
         );
 

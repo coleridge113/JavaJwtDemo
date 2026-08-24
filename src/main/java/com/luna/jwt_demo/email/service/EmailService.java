@@ -26,10 +26,4 @@ public class EmailService {
         log.info(order.toString());
 
     }
-
-
-    // @RabbitListener(queues = RabbitMqConfig.QUEUE_NAME)
-    // public void receiveMessage(Map<String, String> message) {
-    //     log.info("Message: " + message.get("text"));
-    // }
 }
