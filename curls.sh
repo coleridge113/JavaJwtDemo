@@ -76,7 +76,7 @@ function get_product() {
     local token="${2:-$AUTH_TOKEN}"
 
     curl http://localhost:8080/api/v1/products/$id \
-        -H "Authorization: Bearer $AUTH_TOKEN"
+        -H "Authorization: Bearer ${token}" \
 }
 
 function get_cart() {
@@ -84,7 +84,7 @@ function get_cart() {
     local token="${2:-$AUTH_TOKEN}"
 
     curl http://localhost:8080/api/v1/carts \
-        -H "Authorization: Bearer $AUTH_TOKEN"
+        -H "Authorization: Bearer ${token}" \
 }
 
 function create_order() {
@@ -99,7 +99,7 @@ function add_cart_item() {
 
     curl -i -X PUT http://localhost:8080/api/v1/carts/items \
         -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $AUTH_TOKEN" \
+        -H "Authorization: Bearer ${token}" \
         -d '{
             "productId": '$id',
             "quantity": '$qty'
@@ -113,7 +113,7 @@ function update_order_status() {
 
     curl -i -X PUT http://localhost:8080/api/v1/orders/$id/status \
         -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $AUTH_TOKEN" \
+        -H "Authorization: Bearer ${token}" \
         -d '{
             "status": '\"$order_status\"'
         }'
