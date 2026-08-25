@@ -2,7 +2,11 @@
 curl -i -X POST http://localhost:8080/api/v1/products \
   -H "Authorization: Bearer $AUTH_TOKEN" \
   -H "Content-Type: application/json" \
-  -d "{\"name\": \"Laptop\", \"stockQuantity\": 10}"
+  -d '{
+    "name": "1080p Web Camera with Dual Microphones",
+    "stockQuantity": 50,
+    "amountInCents": 3999
+  }'
 
 
 // Get paged products
