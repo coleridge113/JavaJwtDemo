@@ -81,6 +81,10 @@ public class OrderService {
         List<Long> orderItemIdList = null;
         List<OrderItemResponse> orderItems = null;
 
+        orderItemIdList = order.getOrderItems().stream()
+            .map(OrderItemEntity::getId)
+            .toList();
+
         if (includes != null && includes.contains("items")) {
             orderItems = order.getOrderItems().stream().map(item -> {
                 Integer quantity = item.getQuantity();
@@ -97,11 +101,7 @@ public class OrderService {
             })
             .toList();
 
-        } else {
-            orderItemIdList = order.getOrderItems().stream()
-                .map(OrderItemEntity::getId)
-                .toList();
-        }
+        } 
 
         return new OrderDto(
             order.getId(),
