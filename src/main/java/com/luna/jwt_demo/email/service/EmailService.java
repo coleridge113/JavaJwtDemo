@@ -13,7 +13,6 @@ import com.luna.jwt_demo.order.model.OrderDto;
 public class EmailService {
 
     private static final Logger log = LoggerFactory.getLogger(EmailService.class);
-    private RabbitTemplate rabbitTemplate;
 
     public EmailService(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
