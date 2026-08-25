@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.luna.jwt_demo.product.model.ProductDto;
 import com.luna.jwt_demo.product.service.ProductService;
@@ -58,4 +59,11 @@ public class ProductController {
 
         return ResponseEntity.ok(productsPage);
     }
+
+    // @GetMapping("/search")
+    // public ResponseEntity<ProductDto> searchProducts(
+    //     @RequestParam String keyword
+    // ) {
+    //
+    // }
 }
