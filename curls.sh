@@ -76,7 +76,7 @@ function get_product() {
     local token="${2:-$AUTH_TOKEN}"
 
     curl http://localhost:8080/api/v1/products/$id \
-        -H "Authorization: Bearer ${token}" \
+        -H "Authorization: Bearer ${token}"
 }
 
 function get_cart() {
@@ -84,7 +84,7 @@ function get_cart() {
     local token="${2:-$AUTH_TOKEN}"
 
     curl http://localhost:8080/api/v1/carts \
-        -H "Authorization: Bearer ${token}" \
+        -H "Authorization: Bearer ${token}"
 }
 
 function create_order() {
