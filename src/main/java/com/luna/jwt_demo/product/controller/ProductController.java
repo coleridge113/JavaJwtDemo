@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,12 @@ public class ProductController {
         Page<ProductDto> productsPage = productService.getProducts(pageable);
 
         return ResponseEntity.ok(productsPage);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long productId) {
+        productService.deleteProduct(productId);
+        return ResponseEntity.ok(String.format("Successfully deleted product with ID %s", productId));
     }
 
     // @GetMapping("/search")
