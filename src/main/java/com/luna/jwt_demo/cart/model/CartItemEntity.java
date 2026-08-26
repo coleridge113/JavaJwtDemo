@@ -8,11 +8,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import com.luna.jwt_demo.product.model.ProductEntity;
 import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "cart_items")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartItemEntity {
 
     @Id
@@ -29,14 +38,6 @@ public class CartItemEntity {
 
     @Column(nullable = false)
     private Integer quantity;
-
-    public Long getId() { return this.id; }
-    public CartEntity getCart() { return this.cart; }
-    public void setCart(CartEntity cart) { this.cart = cart; }
-    public ProductEntity getProduct() { return this.product; }
-    public void setProduct(ProductEntity product) { this.product = product; }
-    public Integer getQuantity() { return this.quantity; }
-    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
     public Long getAmountInCents() { return this.product.getAmountInCents(); }
 }

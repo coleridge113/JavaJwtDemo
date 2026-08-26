@@ -10,11 +10,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "order_items")
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class OrderItemEntity {
 
     @Id
@@ -47,10 +55,6 @@ public class OrderItemEntity {
         this.amountInCents = amountInCents;
     }
 
-    public Long getId() { return this.id; }
-    public Integer getQuantity() { return this.quantity; }
     public OrderEntity getOrderEntity() { return this.order; }
     public ProductEntity getProductEntity() { return this.product; }
-    public Long getAmountInCents() { return this.amountInCents; }
-    public void setOrder(OrderEntity order) { this.order = order; }
 }

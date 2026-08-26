@@ -62,11 +62,6 @@ public class OrderEntity {
         this.orderItems.add(orderItem);
     }
 
-    public Long getId() { return this.id; }
     public Long getUserId() { return this.user.getId(); }
-    public void setUser(UserInfo user) { this.user = user; }
-    public List<OrderItemEntity> getOrderItems() { return this.orderItems; }
-    public OrderStatus getStatus() { return this.status; }
-    public void setStatus(OrderStatus status) { this.status = status; }
 
 }

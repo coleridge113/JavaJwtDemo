@@ -9,10 +9,16 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "products")
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class ProductEntity {
 
     @Id
@@ -31,17 +37,9 @@ public class ProductEntity {
     @Column(nullable = false, columnDefinition = "BIGINT DEFAULT 0")
     private Long amountInCents = 0L;
 
-    protected ProductEntity() {}
-
     public ProductEntity(String name, Integer stockQuantity, Long amountInCents) {
         this.name = name;
         this.stockQuantity = stockQuantity;
         this.amountInCents = (amountInCents != null) ? amountInCents : 0L;
     }
-
-    public Long getId() { return this.id; }
-    public String getName() { return this.name; }
-    public Integer getStockQuantity() { return this.stockQuantity; }
-    public void setStockQuantity(Integer stockQuantity) { this.stockQuantity = stockQuantity; }
-    public Long getAmountInCents() { return this.amountInCents; }
 }

@@ -10,7 +10,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.luna.jwt_demo.auth.model.entity.UserInfo;
@@ -23,6 +26,8 @@ import jakarta.persistence.Column;
 @Table(name = "carts")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class CartEntity {
 
     @Id
@@ -64,8 +69,6 @@ public class CartEntity {
         recalculateTotal();
     }
 
-    public UserInfo getUser() { return this.user; }
-    public void setUser(UserInfo user) { this.user = user; }
     public List<CartItemEntity> getItems() { return this.items; }
     public void clearCart() { this.items.clear(); }
 
