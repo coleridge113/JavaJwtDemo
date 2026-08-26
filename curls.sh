@@ -106,6 +106,14 @@ function add_cart_item() {
         }'
 }
 
+function remove_cart_item() {
+    local id="$1"
+    local token="${2:-$AUTH_TOKEN}"
+
+    curl -i -X DELETE http://localhost:8080/api/v1/carts/items/$id \
+        -H "Authorization: Bearer ${token}"
+}
+
 function update_order_status() {
     local id="$1"
     local order_status="$2"

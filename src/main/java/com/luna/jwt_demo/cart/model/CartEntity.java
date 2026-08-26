@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 import com.luna.jwt_demo.auth.model.entity.UserInfo;
+import com.luna.jwt_demo.common.exception.custom.ResourceNotFoundException;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 
@@ -46,6 +48,19 @@ public class CartEntity {
     public void removeItem(CartItemEntity item) {
         items.remove(item);
         item.setCart(null);
+        recalculateTotal();
+    }
+
+    public void removeItemById(Long cartItemId) {
+        items.stream().filter(item -> item.getId().equals(cartItemId))
+            .findFirst()
+            .ifPresentOrElse(
+                this::removeItem,
+                () -> { 
+                    throw new ResourceNotFoundException("Cart item with ID: {} does not exist!", cartItemId); 
+                }
+            );
+
         recalculateTotal();
     }
 

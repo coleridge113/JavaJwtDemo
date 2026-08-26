@@ -74,6 +74,7 @@ public class CartService {
                 Long subtotal = amountInCents * quantity;
 
                 return new CartItemDto(
+                    item.getId(),
                     product.getId(),
                     product.getName(),
                     amountInCents,
@@ -84,5 +85,13 @@ public class CartService {
             .toList();
 
         return items;
+    }
+
+    public void deleteCartItem(Long userId, Long cartItemId) {
+        CartEntity cart = cartRepository.findByUserId(userId)
+            .orElseThrow(() -> new EmptyCartException("User has no items in their cart!"));
+
+        cart.removeItemById(cartItemId);
+        cartRepository.save(cart);
     }
 }

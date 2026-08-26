@@ -30,6 +30,7 @@ public class CartItemEntity {
     @Column(nullable = false)
     private Integer quantity;
 
+    public Long getId() { return this.id; }
     public CartEntity getCart() { return this.cart; }
     public void setCart(CartEntity cart) { this.cart = cart; }
     public ProductEntity getProduct() { return this.product; }
