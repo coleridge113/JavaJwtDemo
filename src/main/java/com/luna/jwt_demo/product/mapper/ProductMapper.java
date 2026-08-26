@@ -22,7 +22,8 @@ public class ProductMapper {
     public ProductEntity toEntity(ProductDto dto) {
         return new ProductEntity(
             dto.name(),
-            dto.stockQuantity()
+            dto.stockQuantity(),
+            dto.amountInCents()
         );
     }
 

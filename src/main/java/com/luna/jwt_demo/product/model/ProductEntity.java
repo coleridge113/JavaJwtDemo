@@ -33,7 +33,7 @@ public class ProductEntity {
 
     protected ProductEntity() {}
 
-    public ProductEntity(String name, Integer stockQuantity) {
+    public ProductEntity(String name, Integer stockQuantity, Long amountInCents) {
         this.name = name;
         this.stockQuantity = stockQuantity;
         this.amountInCents = (amountInCents != null) ? amountInCents : 0L;
