@@ -79,8 +79,8 @@ public class ProductService {
     @Transactional
     public void addProduct(ProductDto dto) {
         ProductEntity entity = productMapper.toEntity(dto);
-
         ProductEntity savedProduct = productRepository.save(entity);
+
         eventPublisher.publishEvent(ProductSyncEvent.createdOrUpdated(savedProduct));
     }
 
@@ -89,8 +89,10 @@ public class ProductService {
         List<ProductEntity> entities = dtos.stream()
             .map(productMapper::toEntity)
             .toList();
+
         List<ProductEntity> savedEntities = productRepository.saveAll(entities);
         List<ProductSyncEvent> syncEvents = ProductSyncEvent.batchCreatedOrUpdated(savedEntities);
+
         eventPublisher.publishEvent(new ProductBatchSyncEvent(syncEvents));
     }
 

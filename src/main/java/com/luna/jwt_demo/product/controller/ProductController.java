@@ -67,10 +67,10 @@ public class ProductController {
         return ResponseEntity.ok(String.format("Successfully deleted product with ID %s", productId));
     }
 
-    // @GetMapping("/search")
-    // public ResponseEntity<ProductDto> searchProducts(
-    //     @RequestParam String keyword
-    // ) {
-    //
-    // }
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductDto>> searchProducts(
+        @RequestParam String keyword
+    ) {
+        return ResponseEntity.ok(productService.searchProducts(keyword));
+    }
 }
