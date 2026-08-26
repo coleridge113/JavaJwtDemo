@@ -137,3 +137,25 @@ function get_products_e() {
         "size": 100
     }'
 }
+
+function search_products() {
+    local keyword="$1"
+    local token="${2:-$AUTH_TOKEN}"
+
+    curl "http://localhost:8080/api/v1/products/search?keyword=${keyword}" \
+        -H "Authorization: Bearer ${token}" 
+}
+
+function search_products_e() {
+    local keyword="$1"
+
+    curl -X POST "http://localhost:9200/products/_search?pretty" \
+      -H "Content-Type: application/json" \
+      -d "{
+        \"query\": {
+          \"match\": {
+            \"name\": \"${keyword}\"
+          }
+        }
+      }"
+}
