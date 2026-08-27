@@ -115,11 +115,10 @@ public class ProductService {
         return productRepository.findAll(pageable).map(productMapper::toDto);
     }
 
-    public List<ProductDto> searchProducts(String keyword) {
-        List<ProductDocument> documents = searchRepository.findByNameContaining(keyword);
-        return documents.stream()
-            .map(productMapper::toDto)
-            .toList();
+    @Transactional(readOnly = true)
+    public Page<ProductDto> searchProducts(String keyword, Pageable pageable) {
+        Page<ProductDocument> documentPage = searchRepository.findByNameContaining(keyword, pageable);
+        return documentPage.map(productMapper::toDto);
     }
 
     @Transactional
