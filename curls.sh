@@ -148,10 +148,13 @@ function get_products_e() {
 
 function search_products() {
     local keyword="$1"
-    local token="${2:-$AUTH_TOKEN}"
+    local page="${2:-0}"
+    local size="${3:-10}"
+    local sort="${4:-name.keyword,asc}" # <--- Target the .keyword subfield!
+    local token="${5:-$AUTH_TOKEN}"
 
-    curl "http://localhost:8080/api/v1/products/search?keyword=${keyword}" \
-        -H "Authorization: Bearer ${token}" 
+    curl -s "http://localhost:8080/api/v1/products/search?keyword=${keyword}&page=${page}&size=${size}&sort=${sort}" \
+        -H "Authorization: Bearer ${token}"
 }
 
 function search_products_e() {
